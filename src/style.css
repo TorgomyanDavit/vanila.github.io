@@ -1,0 +1,131 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    scrollbar-width: none;
+
+}
+
+  
+.container {
+    display: flex;
+    justify-content: space-between;
+    height: 440px;
+    overflow: hidden;
+}
+
+.main-item {
+    width: 50%;
+    height: 90%;
+}
+
+.slider-wrapper {
+    width: 50%;
+    position: relative;
+    overflow: hidden;
+}
+  
+.modatech-look-widgets {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    overflow: scroll;
+    scroll-behavior: smooth;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+#slide-arrow-prev {
+    left: 0;
+    padding-left: 0.25rem;
+    border-radius: 0 2rem 2rem 0;
+}
+
+#slide-arrow-next {
+    right: 0;
+    padding-left: 0.75rem;
+    border-radius: 2rem 0 0 2rem;
+}
+/* 
+.slide-arrow{
+    position: absolute;
+    display: flex;
+    top: 0;
+    bottom: 0;
+    height: 64px;
+    background-color: white;
+    border: none;
+    width: 32px;
+    padding: 0;
+    cursor: pointer;
+    z-index: 1;
+} */
+  
+.slick-arrow {
+    position: absolute;
+    display: flex;
+    top: 0;
+    height: 64px;
+    background-color: white;
+    border: none;
+    width: 32px;
+    padding: 0;
+    cursor: pointer;
+    z-index: 1;
+}
+  
+  
+.slick-next {
+    right: 10px !important;
+}
+
+.slick-next:before {
+    font-size: 24px !important;
+    color: rgb(0, 0, 0) !important;
+}
+
+.slick-prev {
+    left: 10px !important;
+}
+
+.slick-prev:before {
+    font-size: 24px !important;
+    color: rgb(0, 0, 0) !important;
+}
+  
+.modatech-look-widget-container {
+    width: 100%;
+    height: 90%;
+    flex: 1 0 100%;
+}
+
+img {
+    height: 100%;
+    width: 100%;
+    object-fit: contain;
+}
+
+.slick-list {
+    height: 100%;
+}
+
+.slick-track {
+    height: 100%;
+}
+
+.slick-track {
+    height: 90%;
+}
+
+.text {
+    color: black;
+    font-weight: bold;
+}
+
+.button {
+    background: none;
+    outline: none;
+    text-decoration: underline;
+    text-underline-offset: 5px; 
+}
