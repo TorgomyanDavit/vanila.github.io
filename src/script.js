@@ -12,12 +12,6 @@ slides.forEach((slide, index) => {
   const slideImage = slide.querySelector("img");
   slideImage.addEventListener("dragstart", (e) => e.preventDefault());
 
-  // Touch events
-  slide.addEventListener("touchstart", touchStart(index));
-  slide.addEventListener("touchend", touchEnd);
-  slide.addEventListener("touchmove", touchMove);
-
-  // Mouse events
   slide.addEventListener("mousedown", touchStart(index));
   slide.addEventListener("mouseup", touchEnd);
   slide.addEventListener("mouseleave", touchEnd);
@@ -30,7 +24,6 @@ function touchStart(index) {
     isDragging = true;
     currentIndex = index;
     startPos = getPositionX(event);
-
     animationID = requestAnimationFrame(animation);
     slider.classList.add("grabbing");
   };
@@ -59,7 +52,6 @@ function getPositionX(event) {
 
 function animation() {
   setSliderPosition();
-  console.log(isDragging,"isDragging")
   if (isDragging) requestAnimationFrame(animation);
 }
 
