@@ -1,27 +1,74 @@
-// document.addEventListener("DOMContentLoaded", function() {
-//     const slidesContainer = document.getElementById("slides-container");
-//     const slides = document.querySelectorAll(".modatech-look-widget-container");
-//     const prevButton = document.getElementById("slide-arrow-prev");
-//     const nextButton = document.getElementById("slide-arrow-next");
+const slider = document.querySelector(".slider-container"),
+slides = Array.from(document.querySelectorAll(".slide"));
 
-    
-//     prevButton.addEventListener("click", () => {
-//         const slideWidth = slides.length > 0 ? slides[0].clientWidth : 0;
-//         slidesContainer.scrollLeft -= slideWidth;
-//     });
-//     nextButton.addEventListener("click", () => {
-//         const slideWidth = slides.length > 0 ? slides[0].clientWidth : 0;
-//         slidesContainer.scrollLeft += slideWidth;
-//     });
-// });
+let isDragging = false,
+  startPos = 0,
+  currentTranslate = 0,
+  prevTranslate = 0,
+  animationID = 0,
+  currentIndex = 0;
 
+slides.forEach((slide, index) => {
+  const slideImage = slide.querySelector("img");
+  slideImage.addEventListener("dragstart", (e) => e.preventDefault());
 
-$(document).ready(function(){
-    $('.modatech-look-widgets').slick({
-      autoplay: false,
-      autoplaySpeed: 2000,
-      arrows: true,
-      dots: false
-    });
+  // Touch events
+  slide.addEventListener("touchstart", touchStart(index));
+  slide.addEventListener("touchend", touchEnd);
+  slide.addEventListener("touchmove", touchMove);
+
+  // Mouse events
+  slide.addEventListener("mousedown", touchStart(index));
+  slide.addEventListener("mouseup", touchEnd);
+  slide.addEventListener("mouseleave", touchEnd);
+  slide.addEventListener("mousemove", touchMove);
 });
 
+
+function touchStart(index) {
+  return function (event) {
+    isDragging = true;
+    currentIndex = index;
+    startPos = getPositionX(event);
+
+    animationID = requestAnimationFrame(animation);
+    slider.classList.add("grabbing");
+  };
+}
+
+function touchEnd() {
+  isDragging = false;
+  cancelAnimationFrame(animationID);
+  const movedBy = currentTranslate - prevTranslate;
+  if (movedBy < -100 && currentIndex < slides.length - 1) currentIndex += 1;
+  if (movedBy > 100 && currentIndex > 0) currentIndex -= 1;
+  setPositionByIndex();
+  slider.classList.remove("grabbing");
+}
+
+function touchMove(event) {
+  if (isDragging) {
+    const currentPosition = getPositionX(event);
+    currentTranslate = prevTranslate + currentPosition - startPos;
+  }
+}
+
+function getPositionX(event) {
+  return event.type.includes("mouse") ? event.pageX : event.touches[0].clientX;
+}
+
+function animation() {
+  setSliderPosition();
+  console.log(isDragging,"isDragging")
+  if (isDragging) requestAnimationFrame(animation);
+}
+
+function setSliderPosition() {
+  slider.style.transform = `translateX(${currentTranslate}px)`;
+}
+
+function setPositionByIndex() {
+  currentTranslate = currentIndex * -window.innerWidth;
+  prevTranslate = currentTranslate;
+  setSliderPosition();
+}
